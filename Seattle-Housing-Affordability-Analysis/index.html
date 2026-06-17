@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Seattle Rent and Income Growth</title>
+
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <section class="intro">
+    <h1>Seattle Rent and Household Income Growth Before, During, and After COVID</h1>
+
+<p>
+  Seattle has experienced rising housing costs and income growth over the past several years. 
+  This visualization compares average apartment rent growth and median household income 
+  growth from 2018 to 2023 to examine whether incomes have increased enough to keep up 
+  with changing housing costs before, during, and after COVID.
+</p>
+  </section>
+
+  <section class="chart-card">
+    <div id="chart"></div>
+  </section>
+
+  <section class="results-card">
+  <h2>Results</h2>
+
+<p>
+  The visualization shows that both average apartment rent and median household income increased 
+  between 2018 and 2023. However, household income grew at a faster rate than average 
+  apartment rent over the same period.
+</p>
+
+  <p>
+    <strong>Before COVID:</strong> Rent and household income both increased between
+    2018 and 2019.
+  </p>
+
+  <p>
+    <strong>During COVID:</strong> Rent growth slowed around 2020 while household
+    income continued increasing. This created a larger gap between the two trends.
+  </p>
+
+  <p>
+    <strong>After COVID:</strong> Both rent and income continued to rise, but
+    household income showed a larger overall increase compared to 2018.
+  </p>
+
+  <div class="takeaway">
+    <strong>Takeaway:</strong> Household income grew faster than average apartment rent 
+    between 2018 and 2023, but housing costs remained higher after COVID than before 
+    the pandemic.
+  </div>
+
+</section>
+
+  <p class="source">
+    Sources:
+    <br>
+    Median household income data:
+    <a href="https://www.neilsberg.com/insights/seattle-wa-median-household-income/" target="_blank">
+      Neilsberg, Seattle WA Median Household Income
+    </a>
+
+    <br>
+
+    Apartment rent data:
+    <a href="https://data.seattle.gov/dataset/Apartment-Market-Rent-Prices-by-Census-Tract/h27p-5k3i/about_data" target="_blank">
+      Seattle Open Data, Apartment Market Rent Prices by Census Tract
+    </a>
+  </p>
+
+  <script src="main.js"></script>
+
+</body>
+</html>
