@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Washington EV Narrative Visualization</title>
+
+  <!-- Google Font -->
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Source+Sans+3">
+
+  <!-- CSS File -->
+  <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+
+  <main>
+
+    <h1>Electric Vehicles Are Growing, But Mostly In Larger Cities</h1>
+
+    <p class="description">
+      The cities in Washington with the highest number of registered electric vehicles are shown in this heatmap. 
+      The high rate of electric vehicle use in urban areas is demonstrated by the fact that Seattle has significantly 
+      more EV registrations than other cities.
+    </p>
+
+    <!-- Chart goes here -->
+    <div id="chart"></div>
+
+    <p class="source">
+  Data Source: Washington State Department of Licensing -
+  <a href="https://data.wa.gov/Transportation/Electric-Vehicle-Population-Data/f6w7-q2d2/about_data" target="_blank">
+    Electric Vehicle Population Data
+  </a>
+</p>
+
+  </main>
+
+  <!-- D3 Library -->
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+
+  <!-- JavaScript File -->
+  <script src="./main.js"></script>
+
+</body>
+</html>
