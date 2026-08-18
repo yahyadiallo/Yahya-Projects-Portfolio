@@ -119,3 +119,64 @@ ggplot(salary_corr_df, aes(
     y = "Correlation with Salary"
   ) +
   theme_minimal()
+
+# Compare salary distributions across position groups
+ggplot(nba, aes(
+  x = position_group,
+  y = Salary
+)) +
+  geom_boxplot() +
+  scale_y_continuous(
+    labels = label_dollar(scale = 1e-6, suffix = "M")
+  ) +
+  labs(
+    title = "NBA Salary Distribution by Position Group",
+    x = "Position Group",
+    y = "Salary"
+  ) +
+  theme_minimal()
+
+# Summarize salary by position group
+position_salary_summary <- nba %>%
+  group_by(position_group) %>%
+  summarise(
+    players = n(),
+    avg_salary = mean(Salary),
+    median_salary = median(Salary),
+    min_salary = min(Salary),
+    max_salary = max(Salary)
+  )
+
+position_salary_summary
+
+# Compare the relationship between scoring and salary by position
+ggplot(nba, aes(
+  x = PTS,
+  y = Salary,
+  color = position_group
+)) +
+  geom_point(alpha = 0.6, size = 2) +
+  geom_smooth(
+    method = "lm",
+    se = FALSE
+  ) +
+  scale_y_continuous(
+    labels = label_dollar(scale = 1e-6, suffix = "M")
+  ) +
+  labs(
+    title = "Scoring and Salary Relationship by Position",
+    subtitle = "Linear trends compare how points per game relate to salary across position groups",
+    x = "Points Per Game",
+    y = "Salary",
+    color = "Position Group"
+  ) +
+  theme_minimal()
+
+# Calculate scoring and salary correlation by position group
+position_correlations <- nba %>%
+  group_by(position_group) %>%
+  summarise(
+    pts_salary_correlation = cor(PTS, Salary)
+  )
+
+position_correlations
