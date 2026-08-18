@@ -64,3 +64,58 @@ ggplot(nba, aes(x = Salary)) +
     y = "Number of Players"
   ) +
   theme_minimal()
+
+# Measure correlations between player performance and salary
+salary_correlations <- nba %>%
+  select(
+    Salary,
+    PTS,
+    AST,
+    TRB,
+    STL,
+    BLK,
+    PER,
+    `TS%`,
+    WS,
+    `WS/48`,
+    BPM,
+    VORP
+  ) %>%
+  cor(use = "complete.obs")
+
+salary_correlations
+
+# Extract and rank correlations with salary
+salary_correlations[, "Salary"] %>%
+  sort(decreasing = TRUE)
+
+# Create a table of performance correlations with salary
+salary_corr_df <- tibble(
+  metric = names(salary_correlations[, "Salary"]),
+  correlation = salary_correlations[, "Salary"]
+) %>%
+  filter(metric != "Salary") %>%
+  arrange(desc(correlation))
+
+salary_corr_df
+
+# Visualize which performance metrics are most associated with salary
+ggplot(salary_corr_df, aes(
+  x = reorder(metric, correlation),
+  y = correlation
+)) +
+  geom_col() +
+  geom_text(
+    aes(label = round(correlation, 2)),
+    hjust = -0.2,
+    size = 4
+  ) +
+  scale_y_continuous(limits = c(0, 0.8)) +
+  coord_flip() +
+  labs(
+    title = "NBA Performance Metrics Most Associated with Salary",
+    subtitle = "Points per game shows the strongest positive correlation with player salary",
+    x = "Performance Metric",
+    y = "Correlation with Salary"
+  ) +
+  theme_minimal()
