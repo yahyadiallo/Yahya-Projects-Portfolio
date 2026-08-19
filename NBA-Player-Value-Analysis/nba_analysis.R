@@ -415,7 +415,7 @@ ggplot(
   ) +
   labs(
     title = "NBA Players Providing the Most Salary Value",
-    subtitle = "Actual salary relative to bias-corrected model prediction (500+ minutes played)",
+    subtitle = "Comparing actual and predicted salaries for players with 500+ minutes played",
     x = "Actual Salary as % of Predicted Salary",
     y = NULL
   ) +
