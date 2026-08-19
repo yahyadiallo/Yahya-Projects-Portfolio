@@ -1,6 +1,6 @@
 # NBA Player Value Analysis
 
-An R-based analysis of NBA player salaries and performance during the 2022–23 season. This project explores which performance metrics are most associated with player salaries and uses a regression model to identify players whose actual salaries were substantially below their model-predicted salaries.
+An R-based analysis of NBA player salaries and performance during the 2022–23 season. This project explores which performance metrics are most associated with player salaries and uses a regression model to identify players whose actual salaries were significantly below their model-predicted salaries.
 
 ## Project Overview
 
@@ -11,7 +11,7 @@ This project analyzes player salary, traditional statistics, and advanced perfor
 1. How are NBA player salaries distributed?
 2. Which performance metrics are most strongly associated with salary?
 3. Does the relationship between scoring and salary differ across position groups?
-4. Which players were paid substantially less than their performance-based model predictions?
+4. Which players were paid significantly less than their performance-based model predictions?
 
 The analysis progresses from exploratory data analysis into a regression-based player value model.
 
@@ -78,7 +78,7 @@ Other strong relationships included:
 - Assists: 0.59
 - Rebounds: 0.50
 
-The results suggest that scoring production has the strongest individual linear association with salary among the performance variables examined, although salary is related to several dimensions of player performance.
+The results suggest that scoring production has the strongest individual linear association with salary among the performance variables examined, although salary is related to several areas of player performance.
 
 Correlation does not necessarily indicate that a metric directly causes a higher salary.
 
@@ -88,7 +88,7 @@ Correlation does not necessarily indicate that a metric directly causes a higher
 
 Because points per game showed the strongest correlation with salary, the relationship was examined further across guards, forwards, and centers.
 
-All three position groups show a positive relationship between scoring and salary. Higher-scoring players generally earn more, although substantial variation remains among players with similar scoring averages.
+All three position groups show a positive relationship between scoring and salary. Higher-scoring players generally earn more, although significant variation remains among players with similar scoring averages.
 
 This indicates that scoring alone cannot fully explain differences in player compensation.
 
@@ -112,19 +112,19 @@ The model can be represented conceptually as:
 
 Log salary was modeled instead of raw salary because the salary distribution is highly skewed.
 
-Predictions were converted back into dollar values using **Duan's smearing correction**, which helps correct retransformation bias when converting predictions from the logarithmic scale back to salary values.
+Predictions were converted back into dollar values using an adjustment based on the model's residuals to improve accuracy after the log transformation.
 
 Model residuals were also examined to evaluate how prediction errors behaved across predicted salary levels.
 
 ## Identifying Salary Value
 
-After generating predicted salaries, each player's actual salary was compared with the salary estimated by the model.
+After generating predicted salaries, each players actual salary was compared with the salary estimated by the model.
 
 The primary value measure was:
 
 `Actual Salary / Predicted Salary × 100`
 
-A lower percentage indicates that a player's actual salary was substantially below the model's prediction.
+A lower percentage indicates that a players actual salary was significantly below the model's prediction.
 
 ### Players Providing the Most Salary Value
 
@@ -134,35 +134,35 @@ Among players with at least 500 minutes played, Kris Dunn had the lowest actual 
 
 His actual salary was approximately **8.5% of his predicted salary**.
 
-Other players whose actual salaries were substantially below their model predictions included Desmond Bane, Anthony Lamb, Tre Jones, Austin Reaves, and others.
+Other players whose actual salaries were significantly below their model predictions included Desmond Bane, Anthony Lamb, Tre Jones, Austin Reaves, and others.
 
 These results should be interpreted as **model-based estimates of salary value**, rather than definitive measures of whether a player was underpaid.
 
 ## Key Findings
 
-- NBA salaries were heavily right-skewed, with most players earning substantially less than the league's highest-paid players.
+- NBA salaries were heavily right-skewed, with most players earning significantly less than the league's highest-paid players.
 - Points per game had the strongest positive correlation with salary among the performance metrics examined (`r ≈ 0.73`).
 - VORP and Win Shares were also strongly associated with salary.
 - Scoring showed a positive relationship with salary across guards, forwards, and centers.
 - A regression model combining age, position, traditional statistics, and advanced metrics was used to estimate expected player salaries.
-- Several players earned substantially less than their model-predicted salaries, identifying potential salary-value players within the scope of the model.
+- Several players had actual salaries well below the model’s predictions, highlighting players who may have delivered strong performance for their level of compensation.
 
 ## Limitations
 
-The model estimates salary based only on the variables available in the dataset and should not be interpreted as a complete measure of a player's market value.
+The model estimates salary based only on the variables available in the dataset and should not be interpreted as a complete measure of a players market value.
 
 NBA salaries are also influenced by factors not captured by the model, including:
 
-- Rookie-scale contracts
+- Rookie scale contracts
 - Contract timing
 - Free agency and market conditions
-- Salary-cap rules
+- Salary cap rules
 - Injuries
-- Previous-season performance
+- Previous season performance
 - Contract length
 - Team strategy and roster needs
 
-The analysis therefore identifies players whose salaries differ from what would be expected **based on the statistical variables included in the model**, rather than determining whether a player is objectively overpaid or underpaid.
+This analysis compares players actual salaries with what the model predicts based on their performance and characteristics. The results are intended to highlight potential salary value, not to label players as overpaid or underpaid.
 
 ## Repository Structure
 
