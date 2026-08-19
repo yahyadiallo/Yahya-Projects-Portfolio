@@ -180,3 +180,127 @@ position_correlations <- nba %>%
   )
 
 position_correlations
+
+# PLAYER VALUE MODEL ------------------------------------------------------
+
+# Select variables for salary modeling
+model_data <- nba %>%
+  select(
+    `Player Name`,
+    Salary,
+    Age,
+    PTS,
+    AST,
+    TRB,
+    PER,
+    WS,
+    BPM,
+    VORP,
+    position_group
+  )
+
+glimpse(model_data)
+
+# Check correlations between potential model predictors
+predictor_correlations <- model_data %>%
+  select(
+    Age,
+    PTS,
+    AST,
+    TRB,
+    PER,
+    WS,
+    BPM,
+    VORP
+  ) %>%
+  cor()
+
+round(predictor_correlations, 2)
+
+# Build a multiple linear regression model to estimate salary
+salary_model <- lm(
+  Salary ~ Age + PTS + AST + TRB + BPM + VORP + position_group,
+  data = model_data
+)
+
+summary(salary_model)
+
+# Add predicted salaries and residuals to the modeling data
+model_results <- model_data %>%
+  mutate(
+    predicted_salary = predict(salary_model),
+    residual = Salary - predicted_salary
+  )
+
+glimpse(model_results)
+
+# Compare actual salaries with model-predicted salaries
+ggplot(model_results, aes(
+  x = predicted_salary,
+  y = Salary
+)) +
+  geom_point(alpha = 0.6) +
+  geom_abline(
+    slope = 1,
+    intercept = 0,
+    linetype = "dashed"
+  ) +
+  scale_x_continuous(
+    labels = label_dollar(scale = 1e-6, suffix = "M")
+  ) +
+  scale_y_continuous(
+    labels = label_dollar(scale = 1e-6, suffix = "M")
+  ) +
+  labs(
+    title = "Actual vs. Predicted NBA Player Salaries",
+    subtitle = "Predictions are based on age, performance metrics, and position",
+    x = "Predicted Salary",
+    y = "Actual Salary"
+  ) +
+  theme_minimal()
+
+# Find players earning the most below their model-predicted salary
+model_results %>%
+  arrange(residual) %>%
+  select(
+    `Player Name`,
+    Salary,
+    predicted_salary,
+    residual,
+    PTS,
+    VORP,
+    position_group
+  ) %>%
+  slice_head(n = 10)
+
+# Inspect playing time for players with the largest negative residuals
+model_results %>%
+  arrange(residual) %>%
+  slice_head(n = 10) %>%
+  left_join(
+    nba %>%
+      select(`Player Name`, GP, `Total Minutes`),
+    by = "Player Name"
+  ) %>%
+  select(
+    `Player Name`,
+    Salary,
+    predicted_salary,
+    residual,
+    GP,
+    `Total Minutes`,
+    PTS,
+    VORP,
+    Age
+  )
+
+# Remove players with limited playing time from the value analysis
+eligible_players <- model_results %>%
+  left_join(
+    nba %>%
+      select(`Player Name`, GP, `Total Minutes`),
+    by = "Player Name"
+  ) %>%
+  filter(`Total Minutes` >= 500)
+
+nrow(eligible_players)
