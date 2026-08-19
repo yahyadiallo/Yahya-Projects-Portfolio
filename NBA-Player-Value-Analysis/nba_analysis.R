@@ -298,7 +298,7 @@ salary_model <- lm(
 summary(salary_model)
 
 
-# Calculate Duan's smearing factor for bias-corrected dollar predictions
+# Calculate adjustment for predicted salaries
 smearing_factor <- mean(
   exp(residuals(salary_model))
 )
